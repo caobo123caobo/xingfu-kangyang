@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>幸福康养 - 适老化康养演示平台</title>
+<meta name="description" content="幸福康养适老化康养演示平台，面向老年用户与子女的双角色康养互动小程序">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ====== 登录页 ====== -->
+  <section id="view-login" class="view active" role="main" aria-label="登录">
+    <div class="auth-container">
+      <div class="brand-header">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none"><circle cx="28" cy="28" r="28" fill="#4A7C9B"/><path d="M18 28c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10-10-4.5-10-10z" fill="#FFF8F0"/><path d="M28 18v20M18 28h20" stroke="#E8833A" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </div>
+        <h1>幸福康养</h1>
+        <p class="brand-sub">智慧康养 · 温暖相伴</p>
+      </div>
+      <form id="login-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="login-phone">手机号码</label>
+          <input type="tel" id="login-phone" placeholder="请输入手机号码" maxlength="11" autocomplete="tel" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="login-password">密码</label>
+          <input type="password" id="login-password" placeholder="请输入密码" autocomplete="current-password" required aria-required="true">
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">登 录</button>
+        <div class="auth-footer">
+          <a href="#view-register" class="link-nav" data-nav="register">还没有账号？立即注册</a>
+        </div>
+      </form>
+      <p class="demo-badge">演示版本 · 无需真实手机号</p>
+    </div>
+  </section>
+
+  <!-- ====== 注册页 ====== -->
+  <section id="view-register" class="view" role="main" aria-label="注册">
+    <div class="auth-container">
+      <header class="page-header">
+        <button class="btn-back" data-nav="login" aria-label="返回登录">← 返回</button>
+        <h2>注册账号</h2>
+      </header>
+      <form id="register-form" class="auth-form" novalidate>
+        <div class="form-group">
+          <label for="reg-name">姓名</label>
+          <input type="text" id="reg-name" placeholder="请输入您的姓名" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="reg-phone">手机号码</label>
+          <input type="tel" id="reg-phone" placeholder="请输入手机号码" maxlength="11" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="reg-password">设置密码</label>
+          <input type="password" id="reg-password" placeholder="至少6位密码" minlength="6" required aria-required="true">
+        </div>
+        <div class="form-group">
+          <label for="reg-confirm">确认密码</label>
+          <input type="password" id="reg-confirm" placeholder="再次输入密码" required aria-required="true">
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg">注 册</button>
+        <div class="auth-footer">
+          <a href="#view-login" class="link-nav" data-nav="login">已有账号？返回登录</a>
+        </div>
+      </form>
+      <p class="demo-badge">演示版本 · 数据仅存本地</p>
+    </div>
+  </section>
+
+  <!-- ====== 身份选择页 ====== -->
+  <section id="view-role" class="view" role="main" aria-label="身份选择">
+    <div class="role-container">
+      <h1 class="role-title">请选择您的身份</h1>
+      <p class="role-sub">选择身份后将进入对应功能页面</p>
+      <div class="role-cards">
+        <button class="role-card" data-role="elder" aria-label="我是老人">
+          <div class="role-icon" aria-hidden="true">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" stroke="#4A7C9B" stroke-width="3" fill="#EBF2F7"/><circle cx="32" cy="24" r="10" fill="#4A7C9B"/><path d="M16 50c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#4A7C9B" opacity=".3"/></svg>
+          </div>
+          <h2>我是老人</h2>
+          <p>使用康养训练、音乐律动、<br>紧急呼叫等功能</p>
+        </button>
+        <button class="role-card" data-role="child" aria-label="我是子女">
+          <div class="role-icon" aria-hidden="true">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="30" stroke="#E8833A" stroke-width="3" fill="#FDF3EB"/><circle cx="24" cy="24" r="8" fill="#E8833A"/><circle cx="40" cy="24" r="8" fill="#E8833A"/><path d="M12 50c0-8 6-14 12-14s8 3 8 6c0-3 2-6 8-6s12 6 12 14" fill="#E8833A" opacity=".3"/></svg>
+          </div>
+          <h2>我是子女</h2>
+          <p>查看父母康养数据、远程互动、<br>推送提醒等功能</p>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 老人端首页 ====== -->
+  <section id="view-elder-home" class="view" role="main" aria-label="老人首页">
+    <header class="app-header">
+      <div class="header-left">
+        <span class="greeting" id="elder-greeting">您好，演示用户</span>
+      </div>
+      <div class="header-right">
+        <button class="btn-icon" data-nav="role" aria-label="切换身份" title="切换身份">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+        </button>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="date-bar" id="elder-date"></div>
+      <h2 class="section-title">今日康养</h2>
+      <div class="feature-grid">
+        <button class="feature-card card-music" data-nav="elder-music" aria-label="AI智能律动选曲">
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="12" fill="#4A7C9B" opacity=".12"/><path d="M15 28V14l14-2v14" stroke="#4A7C9B" stroke-width="2" stroke-linecap="round"/><circle cx="13" cy="28" r="3" fill="#4A7C9B"/><circle cx="27" cy="26" r="3" fill="#4A7C9B"/></svg>
+          </div>
+          <h3>AI智能律动选曲</h3>
+          <p>根据健康状态推荐音乐</p>
+        </button>
+        <button class="feature-card card-game" data-nav="elder-game" aria-label="节奏认知康复游戏">
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="12" fill="#E8833A" opacity=".12"/><circle cx="20" cy="20" r="10" stroke="#E8833A" stroke-width="2" fill="none"/><circle cx="20" cy="20" r="4" fill="#E8833A"/><path d="M20 8v4M20 28v4M8 20h4M28 20h4" stroke="#E8833A" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <h3>节奏认知康复</h3>
+          <p>趣味节奏训练游戏</p>
+        </button>
+        <button class="feature-card card-profile" data-nav="elder-profile" aria-label="个人中心">
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="12" fill="#5B9A5B" opacity=".12"/><circle cx="20" cy="16" r="6" stroke="#5B9A5B" stroke-width="2" fill="none"/><path d="M10 32c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="#5B9A5B" stroke-width="2" stroke-linecap="round" fill="none"/></svg>
+          </div>
+          <h3>个人中心</h3>
+          <p>健康记录与设置</p>
+        </button>
+        <button class="feature-card card-emergency" data-nav="elder-emergency" aria-label="一键紧急呼叫">
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="12" fill="#D9534F" opacity=".12"/><path d="M20 10c-5 0-9 4-9 9 0 7 9 15 9 15s9-8 9-15c0-5-4-9-9-9z" stroke="#D9534F" stroke-width="2" fill="none"/><circle cx="20" cy="19" r="3" fill="#D9534F"/></svg>
+          </div>
+          <h3>一键紧急呼叫</h3>
+          <p>紧急情况快速求助</p>
+        </button>
+      </div>
+      <h2 class="section-title">今日推荐</h2>
+      <div class="recommend-card">
+        <div class="recommend-info">
+          <span class="recommend-tag">演示推荐</span>
+          <h3>晨间舒缓律动</h3>
+          <p>时长 15 分钟 · 舒缓节奏 · 适合晨间练习</p>
+        </div>
+        <button class="btn btn-outline" onclick="showToast('已开始播放演示曲目')">开始练习</button>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card">
+          <span class="stat-num">128</span>
+          <span class="stat-label">累计训练(次) · 演示</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">32</span>
+          <span class="stat-label">连续天数 · 演示</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">96</span>
+          <span class="stat-label">平均得分 · 演示</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== AI智能律动选曲 ====== -->
+  <section id="view-elder-music" class="view" role="main" aria-label="AI智能律动选曲">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="btn-back" data-nav="elder-home" aria-label="返回老人首页">← 返回</button>
+        <h2>AI智能律动选曲</h2>
+      </div>
+      <div class="header-right">
+        <button class="btn-icon" id="btn-voice-music" aria-label="语音播报" title="语音播报">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg>
+        </button>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="spec-section">
+        <label class="spec-label">选择健康状态</label>
+        <div class="spec-group" id="health-spec" role="radiogroup" aria-label="健康状态选择">
+          <button class="spec-btn active" data-health="relax" role="radio" aria-checked="true">放松舒缓</button>
+          <button class="spec-btn" data-health="energy" role="radio" aria-checked="false">活力提神</button>
+          <button class="spec-btn" data-health="sleep" role="radio" aria-checked="false">助眠安睡</button>
+          <button class="spec-btn" data-health="memory" role="radio" aria-checked="false">记忆训练</button>
+        </div>
+      </div>
+      <div class="spec-section">
+        <label class="spec-label">选择难度</label>
+        <div class="spec-group" id="difficulty-spec" role="radiogroup" aria-label="难度选择">
+          <button class="spec-btn active" data-diff="easy" role="radio" aria-checked="true">简单</button>
+          <button class="spec-btn" data-diff="medium" role="radio" aria-checked="false">适中</button>
+          <button class="spec-btn" data-diff="hard" role="radio" aria-checked="false">挑战</button>
+        </div>
+      </div>
+      <div class="music-list" id="music-list" aria-label="推荐曲目列表">
+      </div>
+      <div class="player-bar" id="music-player" hidden>
+        <div class="player-info">
+          <span class="player-title" id="player-title">--</span>
+          <span class="player-artist" id="player-artist">--</span>
+        </div>
+        <div class="player-controls">
+          <button class="btn-icon" aria-label="上一首" onclick="showToast('切换到上一首（演示）')">⏮</button>
+          <button class="btn-icon player-play" id="player-play-btn" aria-label="播放/暂停" onclick="togglePlay()">▶</button>
+          <button class="btn-icon" aria-label="下一首" onclick="showToast('切换到下一首（演示）')">⏭</button>
+        </div>
+        <div class="player-progress">
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+          <span class="progress-text" id="progress-text">0:00 / 3:00</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 节奏认知康复游戏 ====== -->
+  <section id="view-elder-game" class="view" role="main" aria-label="节奏认知康复游戏">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="btn-back" data-nav="elder-home" aria-label="返回老人首页">← 返回</button>
+        <h2>节奏认知康复</h2>
+      </div>
+      <div class="header-right">
+        <button class="btn-icon" id="btn-voice-game" aria-label="语音播报" title="语音播报">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg>
+        </button>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="game-spec">
+        <label class="spec-label">游戏模式</label>
+        <div class="spec-group" id="game-mode-spec">
+          <button class="spec-btn active" data-mode="tap">点击跟拍</button>
+          <button class="spec-btn" data-mode="seq">顺序记忆</button>
+          <button class="spec-btn" data-mode="match">节奏配对</button>
+        </div>
+      </div>
+      <div class="game-board" id="game-board">
+        <div class="game-score">
+          <span>得分: <strong id="game-score-val">0</strong></span>
+          <span>连击: <strong id="game-combo">0</strong></span>
+        </div>
+        <div class="game-area" id="game-area">
+          <div class="game-circle" id="game-circle">
+            <span class="game-hint" id="game-hint">点击下方按钮开始</span>
+          </div>
+        </div>
+        <div class="game-pads" id="game-pads">
+          <button class="game-pad pad-1" data-pad="1" aria-label="节拍1">♪</button>
+          <button class="game-pad pad-2" data-pad="2" aria-label="节拍2">♫</button>
+          <button class="game-pad pad-3" data-pad="3" aria-label="节拍3">♬</button>
+          <button class="game-pad pad-4" data-pad="4" aria-label="节拍4">♩</button>
+        </div>
+      </div>
+      <div class="game-controls">
+        <button class="btn btn-primary btn-lg" id="game-start-btn" onclick="startGame()">开始游戏</button>
+        <button class="btn btn-outline" id="game-stop-btn" onclick="stopGame()" disabled>结束</button>
+      </div>
+      <div class="game-history">
+        <h3>最近游戏记录（演示）</h3>
+        <ul class="history-list">
+          <li><span>点击跟拍 · 简单</span><span>得分 92 · 2026-10-11</span></li>
+          <li><span>顺序记忆 · 适中</span><span>得分 85 · 2026-10-10</span></li>
+          <li><span>节奏配对 · 简单</span><span>得分 78 · 2026-10-09</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 个人中心 ====== -->
+  <section id="view-elder-profile" class="view" role="main" aria-label="个人中心">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="btn-back" data-nav="elder-home" aria-label="返回老人首页">← 返回</button>
+        <h2>个人中心</h2>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="profile-header">
+        <div class="avatar" aria-hidden="true">
+          <svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="#4A7C9B" opacity=".15" stroke="#4A7C9B" stroke-width="2"/><circle cx="30" cy="22" r="10" fill="#4A7C9B"/><path d="M12 52c0-10 8-18 18-18s18 8 18 18" fill="#4A7C9B" opacity=".4"/></svg>
+        </div>
+        <div class="profile-info">
+          <h3 id="profile-name">演示用户</h3>
+          <p>ID: DK20261012 · 演示账号</p>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card"><span class="stat-num">128</span><span class="stat-label">训练次数 · 演示</span></div>
+        <div class="stat-card"><span class="stat-num">32</span><span class="stat-label">连续天数 · 演示</span></div>
+        <div class="stat-card"><span class="stat-num">96</span><span class="stat-label">平均得分 · 演示</span></div>
+      </div>
+      <div class="profile-section">
+        <h3 class="section-title">健康记录（演示）</h3>
+        <div class="record-list">
+          <div class="record-item"><span class="record-date">2026-10-12</span><span class="record-text">完成晨间律动训练 15分钟</span><span class="record-score">得分 95</span></div>
+          <div class="record-item"><span class="record-date">2026-10-11</span><span class="record-text">完成节奏认知游戏 20分钟</span><span class="record-score">得分 88</span></div>
+          <div class="record-item"><span class="record-date">2026-10-10</span><span class="record-text">完成音乐放松训练 10分钟</span><span class="record-score">得分 92</span></div>
+          <div class="record-item"><span class="record-date">2026-10-09</span><span class="record-text">完成记忆节拍训练 15分钟</span><span class="record-score">得分 85</span></div>
+        </div>
+      </div>
+      <div class="profile-section">
+        <h3 class="section-title">我的收藏</h3>
+        <div class="fav-list">
+          <div class="fav-item"><span>🎵</span><span>茉莉花 · 舒缓版</span><button class="btn-sm" onclick="showToast('已开始播放收藏曲目（演示）')">播放</button></div>
+          <div class="fav-item"><span>🎵</span><span>月亮代表我的心</span><button class="btn-sm" onclick="showToast('已开始播放收藏曲目（演示）')">播放</button></div>
+          <div class="fav-item"><span>🎵</span><span>甜蜜蜜 · 律动版</span><button class="btn-sm" onclick="showToast('已开始播放收藏曲目（演示）')">播放</button></div>
+        </div>
+      </div>
+      <div class="profile-section">
+        <h3 class="section-title">设置</h3>
+        <div class="settings-list">
+          <label class="setting-item">
+            <span>语音播报</span>
+            <input type="checkbox" id="setting-voice" checked class="toggle-input">
+            <span class="toggle-switch" aria-label="语音播报开关"></span>
+          </label>
+          <label class="setting-item">
+            <span>大字体模式</span>
+            <input type="checkbox" id="setting-font" checked class="toggle-input">
+            <span class="toggle-switch" aria-label="大字体模式开关"></span>
+          </label>
+          <label class="setting-item">
+            <span>消息通知</span>
+            <input type="checkbox" id="setting-notify" checked class="toggle-input">
+            <span class="toggle-switch" aria-label="消息通知开关"></span>
+          </label>
+          <button class="setting-item setting-btn" onclick="showToast('已退出登录（演示）')">退出登录</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 一键紧急呼叫 ====== -->
+  <section id="view-elder-emergency" class="view" role="main" aria-label="一键紧急呼叫">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="btn-back" data-nav="elder-home" aria-label="返回老人首页">← 返回</button>
+        <h2>紧急呼叫</h2>
+      </div>
+    </header>
+    <div class="page-content emergency-content">
+      <p class="emergency-note">本功能为演示，不会发起真实呼叫</p>
+      <div class="emergency-btn-wrap">
+        <button class="emergency-btn" id="emergency-call-btn" aria-label="一键紧急呼叫">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M14 8c-2 0-4 2-4 4 0 16 14 28 28 28 2 0 4-2 4-4l-6-8-6 2-4-4-4-4 2-6-8-6z" fill="white"/></svg>
+          <span>一键呼叫</span>
+        </button>
+      </div>
+      <div class="emergency-contacts">
+        <h3>紧急联系人</h3>
+        <div class="contact-card">
+          <div class="contact-info">
+            <strong>张小明（子女）</strong>
+            <span>138****8888 · 演示号码</span>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="showToast('演示模式：已呼叫张小明')">呼叫</button>
+        </div>
+        <div class="contact-card">
+          <div class="contact-info">
+            <strong>李医生（社区）</strong>
+            <span>139****6666 · 演示号码</span>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="showToast('演示模式：已呼叫李医生')">呼叫</button>
+        </div>
+        <div class="contact-card">
+          <div class="contact-info">
+            <strong>社区服务中心</strong>
+            <span>400-***-**** · 演示号码</span>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="showToast('演示模式：已呼叫社区服务中心')">呼叫</button>
+        </div>
+      </div>
+      <div class="emergency-tips">
+        <h3>紧急提示</h3>
+        <ul>
+          <li>保持冷静，清晰说明您的位置和情况</li>
+          <li>如感到身体不适，请先坐下或躺下</li>
+          <li>等待救援人员到达，不要随意移动</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 子女端首页 ====== -->
+  <section id="view-child-home" class="view" role="main" aria-label="子女首页">
+    <header class="app-header">
+      <div class="header-left">
+        <span class="greeting" id="child-greeting">您好，演示用户</span>
+      </div>
+      <div class="header-right">
+        <button class="btn-icon" data-nav="role" aria-label="切换身份" title="切换身份">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+        </button>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="parent-status-card">
+        <div class="parent-info">
+          <div class="avatar-sm" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#4A7C9B" opacity=".15" stroke="#4A7C9B" stroke-width="2"/><circle cx="20" cy="15" r="7" fill="#4A7C9B"/><path d="M8 35c0-7 5-12 12-12s12 5 12 12" fill="#4A7C9B" opacity=".4"/></svg>
+          </div>
+          <div>
+            <h3>爸爸 · 演示用户</h3>
+            <p class="status-online"><span class="status-dot"></span>今日已完成 2 项训练 · 演示</p>
+          </div>
+        </div>
+      </div>
+      <h2 class="section-title">功能导航</h2>
+      <div class="feature-grid feature-grid-3">
+        <button class="feature-card card-interact" data-nav="child-interact" aria-label="亲情互动律动局">
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="12" fill="#E8833A" opacity=".12"/><path d="M10 20c0-5.5 4.5-10 10-10s10 4.5 10 10" stroke="#E8833A" stroke-width="2" fill="none"/><circle cx="15" cy="24" r="3" fill="#E8833A"/><circle cx="25" cy="24" r="3" fill="#E8833A"/><path d="M15 27h10" stroke="#E8833A" stroke-width="2"/></svg>
+          </div>
+          <h3>亲情互动律动局</h3>
+          <p>与父母一起参与律动</p>
+        </button>
+        <button class="feature-card card-data" data-nav="child-data" aria-label="康养数据查看">
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="12" fill="#4A7C9B" opacity=".12"/><rect x="8" y="22" width="6" height="10" rx="2" fill="#4A7C9B"/><rect x="17" y="16" width="6" height="16" rx="2" fill="#4A7C9B"/><rect x="26" y="10" width="6" height="22" rx="2" fill="#4A7C9B"/></svg>
+          </div>
+          <h3>康养数据查看</h3>
+          <p>查看父母训练数据</p>
+        </button>
+        <button class="feature-card card-push" data-nav="child-push" aria-label="远程推送与提醒">
+          <div class="feature-icon" aria-hidden="true">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="12" fill="#5B9A5B" opacity=".12"/><path d="M20 8c-5 0-9 4-9 9v6l-2 3h22l-2-3v-6c0-5-4-9-9-9z" stroke="#5B9A5B" stroke-width="2" fill="none"/><path d="M16 28c0 2.2 1.8 4 4 4s4-1.8 4-4" stroke="#5B9A5B" stroke-width="2"/></svg>
+          </div>
+          <h3>远程推送与提醒</h3>
+          <p>发送提醒和关怀内容</p>
+        </button>
+      </div>
+      <h2 class="section-title">最近动态</h2>
+      <div class="activity-list">
+        <div class="activity-item"><span class="activity-time">今天 09:30</span><span class="activity-text">爸爸完成了晨间律动训练 · 演示</span></div>
+        <div class="activity-item"><span class="activity-time">昨天 15:00</span><span class="activity-text">爸爸完成了节奏认知游戏 · 演示</span></div>
+        <div class="activity-item"><span class="activity-time">昨天 08:45</span><span class="activity-text">爸爸收听了您推送的音乐 · 演示</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 亲情互动律动局 ====== -->
+  <section id="view-child-interact" class="view" role="main" aria-label="亲情互动律动局">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="btn-back" data-nav="child-home" aria-label="返回子女首页">← 返回</button>
+        <h2>亲情互动律动局</h2>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="interact-intro">
+        <h3>和爸爸一起参与律动训练</h3>
+        <p>发送邀请后，爸爸将在他的设备上收到律动邀请（演示）</p>
+      </div>
+      <div class="interact-activities">
+        <div class="activity-card">
+          <div class="activity-card-icon">🎵</div>
+          <div class="activity-card-info">
+            <h4>双人节拍互动</h4>
+            <p>两人同时跟拍，配合完成节奏</p>
+            <span class="tag">约10分钟 · 简单</span>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="showInviteDemo('双人节拍互动')">发送邀请</button>
+        </div>
+        <div class="activity-card">
+          <div class="activity-card-icon">🎶</div>
+          <div class="activity-card-info">
+            <h4>音乐接龙挑战</h4>
+            <p>轮流接唱歌曲片段，锻炼记忆力</p>
+            <span class="tag">约15分钟 · 适中</span>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="showInviteDemo('音乐接龙挑战')">发送邀请</button>
+        </div>
+        <div class="activity-card">
+          <div class="activity-card-icon">🥁</div>
+          <div class="activity-card-info">
+            <h4>家庭节奏乐队</h4>
+            <p>各自选择乐器，合奏一首曲子</p>
+            <span class="tag">约20分钟 · 挑战</span>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="showInviteDemo('家庭节奏乐队')">发送邀请</button>
+        </div>
+      </div>
+      <div class="interact-history">
+        <h3>互动记录（演示）</h3>
+        <div class="record-list">
+          <div class="record-item"><span class="record-date">2026-10-10</span><span class="record-text">与爸爸完成双人节拍互动</span><span class="record-score">配合度 92%</span></div>
+          <div class="record-item"><span class="record-date">2026-10-05</span><span class="record-text">与爸爸完成音乐接龙挑战</span><span class="record-score">配合度 88%</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 康养数据查看 ====== -->
+  <section id="view-child-data" class="view" role="main" aria-label="康养数据查看">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="btn-back" data-nav="child-home" aria-label="返回子女首页">← 返回</button>
+        <h2>康养数据查看</h2>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="data-summary">
+        <div class="data-card">
+          <span class="data-label">本周训练次数</span>
+          <span class="data-value">12 <small>次 · 演示</small></span>
+        </div>
+        <div class="data-card">
+          <span class="data-label">本周训练时长</span>
+          <span class="data-value">186 <small>分钟 · 演示</small></span>
+        </div>
+        <div class="data-card">
+          <span class="data-label">平均得分</span>
+          <span class="data-value">91 <small>分 · 演示</small></span>
+        </div>
+        <div class="data-card">
+          <span class="data-label">连续训练天数</span>
+          <span class="data-value">32 <small>天 · 演示</small></span>
+        </div>
+      </div>
+      <div class="chart-section">
+        <h3 class="section-title">近7日训练趋势（演示）</h3>
+        <div class="chart-container" role="img" aria-label="近7日训练次数柱状图演示">
+          <div class="bar-chart">
+            <div class="bar-item"><div class="bar" style="height:60%"></div><span class="bar-label">周一</span><span class="bar-val">2次</span></div>
+            <div class="bar-item"><div class="bar" style="height:80%"></div><span class="bar-label">周二</span><span class="bar-val">3次</span></div>
+            <div class="bar-item"><div class="bar" style="height:40%"></div><span class="bar-label">周三</span><span class="bar-val">1次</span></div>
+            <div class="bar-item"><div class="bar" style="height:100%"></div><span class="bar-label">周四</span><span class="bar-val">4次</span></div>
+            <div class="bar-item"><div class="bar" style="height:60%"></div><span class="bar-label">周五</span><span class="bar-val">2次</span></div>
+            <div class="bar-item"><div class="bar" style="height:80%"></div><span class="bar-label">周六</span><span class="bar-val">3次</span></div>
+            <div class="bar-item"><div class="bar bar-today" style="height:50%"></div><span class="bar-label">周日</span><span class="bar-val">2次</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-section">
+        <h3 class="section-title">训练类型分布（演示）</h3>
+        <div class="type-dist">
+          <div class="type-row"><span class="type-name">律动选曲</span><div class="type-bar"><div class="type-fill" style="width:40%"></div></div><span class="type-pct">40%</span></div>
+          <div class="type-row"><span class="type-name">节奏游戏</span><div class="type-bar"><div class="type-fill type-fill-2" style="width:35%"></div></div><span class="type-pct">35%</span></div>
+          <div class="type-row"><span class="type-name">记忆训练</span><div class="type-bar"><div class="type-fill type-fill-3" style="width:25%"></div></div><span class="type-pct">25%</span></div>
+        </div>
+      </div>
+      <div class="data-history">
+        <h3 class="section-title">详细记录（演示）</h3>
+        <div class="record-list">
+          <div class="record-item"><span class="record-date">10-12 09:30</span><span class="record-text">晨间律动训练</span><span class="record-score">15分钟 · 95分</span></div>
+          <div class="record-item"><span class="record-date">10-12 15:00</span><span class="record-text">节奏认知游戏</span><span class="record-score">20分钟 · 88分</span></div>
+          <div class="record-item"><span class="record-date">10-11 09:15</span><span class="record-text">音乐放松训练</span><span class="record-score">10分钟 · 92分</span></div>
+          <div class="record-item"><span class="record-date">10-11 14:30</span><span class="record-text">记忆节拍训练</span><span class="record-score">15分钟 · 85分</span></div>
+          <div class="record-item"><span class="record-date">10-10 10:00</span><span class="record-text">双人节拍互动</span><span class="record-score">20分钟 · 90分</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 远程推送与提醒 ====== -->
+  <section id="view-child-push" class="view" role="main" aria-label="远程推送与提醒">
+    <header class="app-header">
+      <div class="header-left">
+        <button class="btn-back" data-nav="child-home" aria-label="返回子女首页">← 返回</button>
+        <h2>远程推送与提醒</h2>
+      </div>
+    </header>
+    <div class="page-content">
+      <div class="push-section">
+        <h3 class="section-title">推送内容</h3>
+        <div class="push-templates">
+          <div class="push-card">
+            <div class="push-card-info">
+              <h4>🎵 推荐一首歌</h4>
+              <p>为爸爸推荐一首律动曲目</p>
+            </div>
+            <select id="push-song" class="push-select" aria-label="选择推送曲目">
+              <option>茉莉花 · 舒缓版</option>
+              <option>月亮代表我的心</option>
+              <option>甜蜜蜜 · 律动版</option>
+              <option>小星星 · 节拍版</option>
+            </select>
+            <button class="btn btn-primary btn-sm" onclick="showPushDemo('歌曲')">推送</button>
+          </div>
+          <div class="push-card">
+            <div class="push-card-info">
+              <h4>💪 训练提醒</h4>
+              <p>提醒爸爸进行今日训练</p>
+            </div>
+            <select id="push-train" class="push-select" aria-label="选择训练类型">
+              <option>晨间律动训练</option>
+              <option>节奏认知游戏</option>
+              <option>音乐放松训练</option>
+              <option>记忆节拍训练</option>
+            </select>
+            <button class="btn btn-primary btn-sm" onclick="showPushDemo('训练提醒')">推送</button>
+          </div>
+          <div class="push-card">
+            <div class="push-card-info">
+              <h4>💌 关怀留言</h4>
+              <p>给爸爸发送一条关怀消息</p>
+            </div>
+            <input type="text" id="push-message" class="push-input" placeholder="输入关怀留言..." aria-label="关怀留言内容">
+            <button class="btn btn-primary btn-sm" onclick="showPushDemo('关怀留言')">发送</button>
+          </div>
+        </div>
+      </div>
+      <div class="reminder-section">
+        <h3 class="section-title">提醒设置</h3>
+        <div class="reminder-list">
+          <label class="reminder-item">
+            <div class="reminder-info">
+              <strong>晨间训练提醒</strong>
+              <span>每天 08:00</span>
+            </div>
+            <input type="checkbox" class="toggle-input" checked>
+            <span class="toggle-switch" aria-label="晨间训练提醒开关"></span>
+          </label>
+          <label class="reminder-item">
+            <div class="reminder-info">
+              <strong>午后活动提醒</strong>
+              <span>每天 14:30</span>
+            </div>
+            <input type="checkbox" class="toggle-input" checked>
+            <span class="toggle-switch" aria-label="午后活动提醒开关"></span>
+          </label>
+          <label class="reminder-item">
+            <div class="reminder-info">
+              <strong>用药提醒</strong>
+              <span>每天 19:00</span>
+            </div>
+            <input type="checkbox" class="toggle-input">
+            <span class="toggle-switch" aria-label="用药提醒开关"></span>
+          </label>
+          <label class="reminder-item">
+            <div class="reminder-info">
+              <strong>自定义提醒</strong>
+              <span>设置自定义提醒时间</span>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="showToast('演示模式：自定义提醒设置已保存')">设置</button>
+          </label>
+        </div>
+      </div>
+      <div class="push-history">
+        <h3 class="section-title">推送记录（演示）</h3>
+        <div class="record-list">
+          <div class="record-item"><span class="record-date">2026-10-12</span><span class="record-text">推送歌曲「茉莉花」</span><span class="record-score">已收听</span></div>
+          <div class="record-item"><span class="record-date">2026-10-11</span><span class="record-text">发送关怀留言</span><span class="record-score">已查看</span></div>
+          <div class="record-item"><span class="record-date">2026-10-10</span><span class="record-text">推送训练提醒</span><span class="record-score">已完成</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Toast 通知 -->
+<div id="toast" class="toast" role="alert" aria-live="polite" hidden>
+  <span id="toast-text"></span>
+</div>
+
+<!-- 演示弹窗 -->
+<div id="modal-overlay" class="modal-overlay" hidden aria-modal="true" role="dialog">
+  <div class="modal">
+    <h3 id="modal-title">提示</h3>
+    <p id="modal-body">这是一条演示信息</p>
+    <button class="btn btn-primary" onclick="closeModal()">我知道了</button>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
